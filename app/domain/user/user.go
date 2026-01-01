@@ -4,11 +4,13 @@ import (
 	"github.com/kakkky/pkg/ulid"
 )
 
+// Userは集約ルートとして、生成時に付与したIDとハッシュ済みパスワードを不変に保ちながら
+// メールアドレスと名前の整合性を担保する。
 type User struct {
-	id             string
-	email          Email
-	name           string
-	hashedPassword HashedPassword
+    id             string
+    email          Email
+    name           string
+    hashedPassword HashedPassword
 }
 
 // ファクトリー関数
@@ -50,6 +52,7 @@ func ReconstructUser(
 }
 
 // ユーザーオブジェクト更新
+// IDとハッシュ化されたパスワードは生成時の値を不変にしたまま、入力値を検証した結果で再構成する。
 func (u *User) UpdateUser(
 	email string,
 	name string,
